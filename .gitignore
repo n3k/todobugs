@@ -1,3 +1,5 @@
 .venv
+.mysql-data/
 .mysql-data
+.mysql-data/*
 *.pyc
