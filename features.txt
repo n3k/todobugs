@@ -1,0 +1,65 @@
+todobugs: Django python
+
+bugs a implementar:
+
+Implement an Admin user: this admin user is the only user who can execute an arbitrary command on the server :)
+
+The "fixed" version will receive the command and reflect it back to the user into a template (SSTI bug):
+	HA! I see what u doing... You're not gonna execute : "asd".__class__.__mro__[-1].__subclasses__()..... "
+
+
+Can also manage users.
+This administrative interface is listening in another port (another portal). But there is a misconfiguration on the database system and the sql INJECTION from the bugstodo can literally see this databsae too!.
+
+
+SQL injection - login bypass - for normal users only.
+
+Blind SQL Injection
+
+CSRF password change
+XSS storeado
+XSS reflejado
+
+
+
+If you just need some views not to use CSRF, you can use @csrf_exempt:
+
+from django.views.decorators.csrf import csrf_exempt
+
+@csrf_exempt
+def my_view(request):
+    return HttpResponse('Hello world')
+
+
+
+
+El sistema permite crear cuentas de usuarios 
+
+Los passwords son storeados usando md5 sin salt.
+
+el sistema permite crear una nueva lista de tareas a un usuario.
+	- la lista tiene un nombre, fecha, descripcion.
+	- Las listas son privadas (no estan publicadas sobre el profile).	
+	
+	
+El sistema permite cargar una nueva tarea a una lista.
+	- la nueva tarea es simplemente un texto (descripcion).
+
+There is an insecure direct object reference sobre la lista especifica de un usuario. (Se tiene que estar logueado).
+
+El sistema permite publicar una lista de tareas bajo ese usuario.
+	- Esto va sobre el profile de ese usuario.
+	
+
+Hay un XSS storeado	en la descripcion de la tarea
+
+Hay un XSS reflejado cuando se hace el logout.
+	Hay un redirect al fin de la session hacia otra pagina diciendo "hope to see you back soon "name" retrieved from URL"
+	
+La session en cookies realmente no muere del lado del server, solo se limpia del lado del cliente.
+
+
+
+
+
+

@@ -1,0 +1,35 @@
+version: "3"
+services:
+
+  nginx: 
+    #build:
+      #context: ./nginx
+      #dockerfile: Dockerfile
+    image: nginx:latest
+    container_name: production_nginx
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 9080:80
+      - 31337:31337
+    
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    entrypoint: ["./wait.sh"]    
+    ports:
+      - "8000:8000"
+
+  db:
+    image: mysql:latest
+    volumes:
+      - "./.mysql-data/db:/var/lib/mysql"
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: todobugs
+      MYSQL_USER: n3k
+      MYSQL_PASSWORD: todobugs 
