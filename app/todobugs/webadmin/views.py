@@ -6,4 +6,4 @@ from django.http import HttpResponse
 
 
 def index(request):
-    return HttpResponse("Webadmin!")
+    return HttpResponse("<h1>Webadmin!</h1>")

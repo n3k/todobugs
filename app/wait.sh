@@ -5,7 +5,12 @@ while ! nc -z db 3306 ; do
     sleep 3
 done
 
+
+python ./todobugs/manage.py makemigrations myapp
+#python ./todobugs/manage.py makemigrations webadmin
 python ./todobugs/manage.py migrate
+
+
 
 echo "$(pwd)"
 python ./todobugs/manage.py runserver 0.0.0.0:8000
