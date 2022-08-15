@@ -1,5 +1,9 @@
 .venv
 .mysql-data/
-.mysql-data
+.mysql-data/db/
 .mysql-data/*
 *.pyc
+*.dblwr
+*.ibd
+*.tmp
+*.sdi

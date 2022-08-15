@@ -1,0 +1,4 @@
+- No email verification for account creation
+- Insufficient anti-automation for login, registration, and password recovery
+- No password complexity required
+- and all the others

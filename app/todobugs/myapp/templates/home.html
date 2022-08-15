@@ -1,12 +1,41 @@
 {% extends "base.html" %}
 {% block body_block %}
 <div class="container">
-  <div class="jumbotron">
-    <h1>Welcome to the our Login System !!!</h1>
+  <div class="jumbotron">    
     {% if user.is_authenticated %}
         <h2>Hello {{ user.username }}</h2>
+
+        <div class="container px-4 py-5" id="hanging-icons">
+          <h3 class="pb-2 border-bottom">            
+            <a href="{% url 'create_todo' %}" class="text-decoration-none"><svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" fill="currentColor" class="bi bi-file-plus" viewBox="0 0 16 16">
+              <path d="M8.5 6a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V10a.5.5 0 0 0 1 0V8.5H10a.5.5 0 0 0 0-1H8.5V6z"/>
+              <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z"/>
+            </svg> new todo</a>
+          </h3>
+          <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+
+            {% for todo in todos %}         
+              <div class="col d-flex align-items-start">
+                <div class="icon-square text-bg-light d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+                  <svg class="bi" width="1em" height="1em"><use xlink:href="#toggles2"></use></svg>
+                </div>
+                <div>
+                  <h2>{{todo.name}}</h2>
+                  <p>{{todo.description}}</p>                                 
+                  <a href="todo/{{todo.id}}" class="btn btn-primary">
+                    View/Edit
+                  </a>
+                </div>
+              </div>
+            {% endfor %}
+
+          </div>
+        </div>
+
     {% else %}
-        <h2>Register or Login if you'd like to</h2>
+        <h1>Welcome to the our ToDo System !!!</h1>
+  </br>
+        <h2>Register or Login if you'd like to... Don't worry, we have 0 bugs</h2>
     {% endif %}
   </div>
 </div>

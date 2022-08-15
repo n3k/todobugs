@@ -1,18 +1,21 @@
 {% extends 'base.html' %}
 {% block body_block %}
   <div class="container ">
-    <div class="">
-        <h1>Login here :</h1>
-        <form method="post" action="{% url 'user_login' %}">
+    <div class="form-group">
+        <h3> Login here:</h3>
+        <form method="post" action="{% url 'login' %}">
             {% csrf_token %}
             <p><label for="username">Username:</label>
-            <input type="text" name="username" placeholder="Username">
+            <input type="text" class="form-control"  name="username" placeholder="Username" required="true">
             </p>
             <p><label for="password">Password:</label>
-            <input type="password" name="password" placeholder="Password">
+            <input type="password" class="form-control" name="password" placeholder="Password" required="true">
             </p>
             <input type="submit" class="btn btn-outline-success" name="" value="Login">
         </form>
+      </br>
+      </br>
+        <input type="button" class="btn btn-outline-success" name="" value="Forgot Password?">
     </div>
   </div>
 {% endblock %}

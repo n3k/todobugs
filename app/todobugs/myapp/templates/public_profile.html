@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body_block %}
+  <div class="container ">
+  
+    {% autoescape off %}
+      <h2> Welcome to {{ profile.nickname }}'s profile! </h2>
+    {% endautoescape %}
+      <br/>
+      <h6><p>{{profile.bio}}</p></h6>
+      <h6><a href="{{profile.website}}">Visit this user personal website</a></h6>
+
+    <br/>
+    <hr/> 
+
+    {% for todo in public_todos %}          
+
+      <div class="container">
+          <h5>{{todo.todo_name}}</h3>
+          <h6><p>{{todo.todo_desc}}</p></h6>
+          <ul>
+            {% for task in todo.tasks %}
+              <li> {{task.task_desc}} {% if task.task_completed %} - completed {% endif %} </li>
+            {% endfor %}
+          </ul>
+      </div>
+      <br/>
+    {% endfor %}
+
+  </div>
+{% endblock %}

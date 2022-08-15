@@ -1,0 +1,226 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body_block %}
+  <div class="container ">
+
+    {% if user.is_authenticated %}      
+       
+        <h3>Edit ToDo list</h3>
+        <div class="form-group" >
+            <form id="edit_todo_details" method="PUT" action="#">
+              <p><label for="name">Name:</label>
+                <input type="text" name="name" value="{{todo.name}}" class="form-control">
+              </p>                            
+              <p>
+                <div class="form-group purple-border">
+                  <label for="description_text">Description</label>
+                  <textarea class="form-control" rows="3" name="description_text">{{ todo.description }}</textarea>
+                </div>
+              </p>
+              <p>
+                <label for="public">Public:</label>
+                <input name="public" class="form-check-input" type="checkbox" {% if todo.public %} checked {% endif %}>
+              </p>
+
+              <input type="submit" class="btn btn-outline-success" name="" value="Update">
+              <input id="delete_todo_btn" type="button" class="btn btn-danger" name="" value="Delete">
+              <div id="edit_todo_details_result"> </div>
+            </form>
+        </div> 
+
+        <script> 
+            $('#edit_todo_details').submit( function( event ) {
+              event.preventDefault();
+              
+              console.log("edit todo details form submitted!");
+              
+              var serializedData = $(this).serialize();
+              //alert(serializedData);
+                   
+              $.ajax({ // create an AJAX call...
+                  data: serializedData,
+                  type: $(this).attr('method'), // GET or POST
+                  url: $(this).attr('action'), // the file to call
+                  success: function(response) { // on success..
+                    $("#edit_todo_details_result").text("Successfully updated details");
+                  },
+  
+                  error : function(xhr,errmsg,err) {
+                    $('#edit_todo_details_result').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                      " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                    console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                  }
+                });
+              return false;
+            });        
+            
+            
+            $("#delete_todo_btn").click(function() {
+                $.ajax({ // create an AJAX call...                  
+                  type: "DELETE", // GET or POST                  
+                  success: function(response) { // on success..
+                    window.location = "{% url 'home' %}"
+                  }
+                });
+            });
+          
+          </script>
+  
+
+    <br/>
+    <br/>
+
+    <div class="input-group">
+        <div class="pull-left">
+            <button id="new_task_btn" type="button" class="btn btn-primary">add</button>
+        </div>
+        <input type="text" id="new_task_content" placeholder="what do you need to do?" class="form-control">        
+    </div>    
+    <hr/>
+    <!-- <form id="edit_todo" method="POST" action="todo/{{todo.id}}/tasks"> -->
+
+    <ul id="task_list" class="list-group">     
+       
+    </ul>
+
+
+    <br/>
+    <input id="save_tasks" type="button" class="btn btn-outline-success" name="" value="Save">
+
+    <div id="edit_tasklist_results"> </div>
+
+    <script>
+        // Retrieve all tasks for this ToDo as soon as this page loads
+        $.ajax({      
+            type: "GET", 
+            url: "{{todo.id}}/tasks",
+            success: function(response) { // on success..
+                $("#edit_tasklist_results").text("Successfully retrieved tasks");
+                for (var i = 0; i < response.length; i++) {
+                    var task = response[i];
+                    var description = task['description'];
+                    var completed = task['completed'];
+
+                    var text_class = "todo-item input-group-text";
+                    if (completed) {
+                        text_class += " todo-item-completed";
+                    }
+
+                    console.log(task);
+                    $(`<li class="list-group-item"> 
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-danger" onclick="delete_task(this)">
+                                delete
+                            </button>
+                            <button type="button" class="btn btn-success" onclick="complete_task(this)">
+                                complete
+                            </button>
+                        
+                            <div class="input-group-prepend">
+                                <div class="${text_class}">${description}</div>
+                            </div>
+                        
+                        </div>
+                    </li>`).appendTo( "#task_list" );
+                }
+
+            },
+
+            error : function(xhr,errmsg,err) {
+                $('#edit_tasklist_results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                     " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+        });
+
+
+        // new_task_btn
+        $("#new_task_btn").click( function() {
+            var new_task_textbox = $("#new_task_content");
+            var description = new_task_textbox.val();
+            
+            if (description === "") {
+                return;
+            }
+
+            console.log(`added a new task with description: ${description}`);
+
+            $(`<li class="list-group-item"> 
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-danger" onclick="delete_task(this)">
+                        delete
+                    </button>
+                    <button type="button" class="btn btn-success" onclick="complete_task(this)">
+                        complete
+                    </button>               
+                
+                    <div class="input-group-prepend">
+                        <div class="todo-item input-group-text">${description}</div>
+                    </div>
+                
+                </div>
+            </li>`).appendTo( "#task_list" );
+
+            new_task_textbox.val("");
+        });
+
+        function delete_task(event) {
+            //alert(event.parentNode.parentNode.nodeName);
+            var li_el = event.parentNode.parentNode;
+            li_el.remove();            
+        };
+
+        function complete_task(event) {
+            //alert(event.parentNode.parentNode.nodeName);
+            var desc_div = event.nextSibling.nextSibling.firstChild.nextSibling;
+            console.log(desc_div);
+            $(desc_div).toggleClass("todo-item-completed");
+        };
+
+
+        $("#save_tasks").click(function() {
+            var tasks_elements = document.querySelectorAll("ul#task_list li div div div");
+            var tasks = [];
+            
+            for (var i = 0; i < tasks_elements.length; i++) {
+                var t = tasks_elements[i];
+                //console.log(t);
+                tasks.push(
+                    {
+                        "description": t.outerText,
+                        "completed": $(t).hasClass("todo-item-completed")
+                    }
+                )
+            }
+
+            console.log(tasks);
+
+
+
+            $.ajax({      
+                type: "POST", 
+                url: "{{todo.id}}/tasks",
+                data: JSON.stringify(tasks),
+                contentType: "application/json: charset=UTF-8",
+
+                success: function(response) { // on success..
+                    $("#edit_tasklist_results").text("Successfully updated tasks");
+                },
+
+                error : function(xhr,errmsg,err) {
+                    $('#edit_tasklist_results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                        " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                }
+            });
+
+
+        });
+
+    </script>
+    
+
+    {% endif %}
+
+  </div>
+{% endblock %}

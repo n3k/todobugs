@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body_block %}
+  <div class="container ">
+
+    {% if user.is_authenticated %}      
+       
+        <h3>Create a new ToDo list</h3>
+        <div class="form-group" >
+          <form method="POST" action="{% url 'create_todo' %}">
+            {% csrf_token %}
+
+            {{ todo_form.as_p }}            
+
+            <input type="submit" class="btn btn-outline-success" name="" value="Create">
+          </form>
+        </div>
+
+    {% endif %}
+
+  </div>
+{% endblock %}

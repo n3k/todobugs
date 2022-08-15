@@ -28,6 +28,9 @@ DEBUG = True
 ALLOWED_HOSTS = ['app', 'localhost', '127.0.0.1']
 
 
+SESSION_COOKIE_HTTPONLY = False
+ADMIN_ENABLED = False
+
 # Application definition
 
 PASSWORD_HASHERS = [
@@ -135,6 +138,14 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
+
+
+MEDIA_ROOT       =  BASE_DIR / 'media'
+STATIC_ROOT      =  BASE_DIR / 'static'
+
+STATICFILES_DIRS = (
+    BASE_DIR / 'myapp' / 'static',
+)
 
 STATIC_URL = 'static/'
 
