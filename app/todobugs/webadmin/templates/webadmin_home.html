@@ -1,0 +1,50 @@
+{% extends "webadmin_base.html" %}
+{% block body_block %}
+<div class="container">
+  <div class="jumbotron">    
+    {% if user.is_authenticated %}
+        
+        <form id="ping_post" method="POST" action="{% url 'webadmin_ping'%}">
+          {% csrf_token %}
+          <input type="text" name="target_host" placeholder="8.8.8.8">
+          <input type="submit" class="btn bg-danger" value="ping">
+        </form>
+
+        <br/>
+        <hr/>
+        
+        <pre id="results" class="white-space: pre-wrap "></pre>
+        
+
+        <script>
+          
+          $("#ping_post").submit(function(event) {
+            event.preventDefault();
+            
+            console.log("ping submitted!");
+            
+            var serializedData = $(this).serialize();
+                            
+            $.ajax({ // create an AJAX call...
+                data: serializedData,
+                type: $(this).attr('method'), // GET or POST
+                url: $(this).attr('action'), // the file to call
+                success: function(response) { // on success..
+                  $('#results').text(response);
+                },
+
+                error : function(xhr,errmsg,err) {
+                $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                    " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                  console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                }
+              });
+            return false;
+          });
+        </script>
+
+
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

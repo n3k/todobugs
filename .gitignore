@@ -3,6 +3,7 @@
 .mysql-data/db/
 .mysql-data/*
 *.pyc
+__pycache__
 *.dblwr
 *.ibd
 *.tmp

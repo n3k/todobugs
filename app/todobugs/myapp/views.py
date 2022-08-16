@@ -167,7 +167,6 @@ def passwdchg(request):
 
 
 @login_required(login_url="login")
-@csrf_exempt
 @xframe_options_exempt
 def settings(request):  
     if request.method == 'GET':  
@@ -323,6 +322,7 @@ def tasks_handler(request, todo_id):
         return HttpResponseNotAllowed("method not allowed")
 
 
+@login_required(login_url="login")
 def task_details(request, task_id):
     try:
         task = Task.objects.get(id=task_id)    

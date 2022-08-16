@@ -1,0 +1,21 @@
+{% extends 'webadmin_base.html' %}
+{% block body_block %}
+  <div class="container ">
+    <div class="form-group">
+        <h3> Login here:</h3>
+        <form method="post" action="{% url 'webadmin_login' %}">
+            {% csrf_token %}
+            <p><label for="username">Username:</label>
+            <input type="text" class="form-control"  name="username" placeholder="Username" required="true">
+            </p>
+            <p><label for="password">Password:</label>
+            <input type="password" class="form-control" name="password" placeholder="Password" required="true">
+            </p>
+            <input type="submit" class="btn btn-primary" name="" value="Login">
+        </form>
+      </br>
+      </br>
+        
+    </div>
+  </div>
+{% endblock %}

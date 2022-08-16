@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-u0j$pbo9x^++3pnxp&rp0z6%^)t&-4y(&(7d+_gd_r(0=c4^-i'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['app', 'localhost', '127.0.0.1']
 
@@ -67,7 +67,7 @@ ROOT_URLCONF = 'todobugs.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ["myapp.templates"],
+        'DIRS': ["myapp.templates", "webadmin.templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -99,7 +99,7 @@ DATABASES = {
         'NAME': 'todobugs',
         'USER': 'n3k',
         'PASSWORD': 'todobugs',
-        'HOST': '127.0.0.1',   # Or an IP Address that your DB is hosted on
+        'HOST': 'db',   # Or an IP Address that your DB is hosted on
         'PORT': '3306',
     }
 }
