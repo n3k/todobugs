@@ -27,6 +27,8 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['app', 'localhost', '127.0.0.1']
 
+CSRF_TRUSTED_ORIGINS = ["http://localhost:31337", "http://localhost:80", "http://web:31337", "http://web:80"]
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO','https')
 
 SESSION_COOKIE_HTTPONLY = False
 ADMIN_ENABLED = False
