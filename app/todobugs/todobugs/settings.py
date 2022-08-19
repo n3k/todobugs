@@ -25,9 +25,17 @@ SECRET_KEY = 'django-insecure-u0j$pbo9x^++3pnxp&rp0z6%^)t&-4y(&(7d+_gd_r(0=c4^-i
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['app', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['todobugs.debugbreak.systems','app', 'localhost', '127.0.0.1']
 
-CSRF_TRUSTED_ORIGINS = ["http://localhost:31337", "http://localhost:80", "http://web:31337", "http://web:80"]
+CSRF_TRUSTED_ORIGINS = [
+    "http://todobugs.debugbreak.systems:31337",
+    "http://todobugs.debugbreak.systems:9080",
+    "http://localhost:31337",
+    "http://localhost:80",
+    "http://web:31337",
+    "http://web:80"
+]
+
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO','https')
 
 SESSION_COOKIE_HTTPONLY = False

@@ -14,7 +14,6 @@ python ./todobugs/manage.py migrate
 echo "from django.contrib.auth.models import User; User.objects.create_superuser('rick', 'rick@citadel.com', 'morty2022')" | python ./todobugs/manage.py shell
 
 
-
 echo "$(pwd)"
 #python ./todobugs/manage.py runserver 0.0.0.0:8000
 export PYTHONPATH=./todobugs

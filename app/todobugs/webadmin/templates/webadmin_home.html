@@ -6,7 +6,7 @@
         
         <form id="ping_post" method="POST" action="{% url 'webadmin_ping'%}">
           {% csrf_token %}
-          <input type="text" name="target_host" placeholder="8.8.8.8">
+          <input id="ping_text" type="text" name="target_host" placeholder="8.8.8.8">
           <input type="submit" class="btn bg-danger" value="ping">
         </form>
 
@@ -20,7 +20,22 @@
           
           $("#ping_post").submit(function(event) {
             event.preventDefault();
+
+            var ip_reg     = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
+            var domain_reg = /^[\w\-\.]{1,255}$/;
+
+            var ping_text = $('#ping_text').val();
+
+            if(ping_text == '') {
+              $('#results').text("invalid input");
+              return false;
+            }
             
+            if (!ip_reg.test(ping_text) && !domain_reg.test(ping_text) ) {
+              $('#results').text("invalid input");
+              return false;
+            }
+
             console.log("ping submitted!");
             
             var serializedData = $(this).serialize();
