@@ -9,7 +9,7 @@ done
 python ./todobugs/manage.py makemigrations myapp
 python ./todobugs/manage.py makemigrations webadmin
 python ./todobugs/manage.py migrate
-python ./todobugs/manage.py collectstatics
+#python ./todobugs/manage.py collectstatic
 
 echo "from django.contrib.auth.models import User; User.objects.create_superuser('rick', 'rick@citadel.com', 'morty2022')" | python ./todobugs/manage.py shell
 
